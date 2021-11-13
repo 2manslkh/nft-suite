@@ -7,12 +7,12 @@
     "test-local": "npx hardhat --network localhost test ./test/testLocal.js",
     "test-kovan": "npx hardhat --network kovan test ./test/testKovan.js",
     "metadata": "node ./scripts/metadata.js",
-    "csv-to-json": "node ./scripts/utils/readCSV.js",
+    "csv-to-json": "node ./utils/readCSV.js",
     "generate": "node ./scripts/generate.js",
     "pin": "node ./scripts/pin.js",
     "unpin": "node ./scripts/unpin.js",
     "prepare": "node ./scripts/prepare.js",
-    "stage-metadata": "ipfs add ./assets/generated/metadata/ -r --pin false && ipfs add ./assets/generated/images/ -r --pin false",
+    "stage-metadata": "ipfs add ./generated/metadata/ -r --pin false && ipfs add ./generated/images/ -r --pin false",
     "deploy-local": "npx hardhat --network localhost deploy --tags Full",
     "deploy-rinkeby": "npx hardhat --network rinkeby deploy --tags Full",
     "verify-kovan": "npx hardhat --network kovan etherscan-verify",
@@ -22,8 +22,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@chainlink/contracts": "^0.2.2",
     "@openzeppelin/contracts": "^4.2.0",
+    "@openzeppelin/contracts-upgradeable": "^4.3.2",
     "@pinata/sdk": "^1.1.23",
+    "axios": "^0.21.1",
     "canvas": "^2.8.0",
     "canvas-constructor": "^5.0.1",
     "csv-parser": "^3.0.0",
@@ -38,14 +41,32 @@
     "unique-random": "^3.0.0"
   },
   "devDependencies": {
-    "@nomiclabs/hardhat-ethers": "npm:hardhat-deploy-ethers@^0.3.0-beta.10",
+    "@nomiclabs/hardhat-ethers": "npm:hardhat-deploy-ethers@^0.3.0-beta.11",
     "@nomiclabs/hardhat-etherscan": "^2.1.4",
     "@nomiclabs/hardhat-waffle": "^2.0.0",
+    "@openzeppelin/hardhat-upgrades": "^1.10.0",
     "@openzeppelin/test-helpers": "^0.5.13",
     "chai": "^4.2.0",
     "ethereum-waffle": "^3.0.0",
-    "ethers": "^5.4.4",
+    "ethers": "^5.4.7",
     "hardhat": "^2.6.0",
-    "hardhat-deploy": "^0.8.11"
+    "hardhat-deploy": "^0.8.11",
+    "hardhat-gas-reporter": "^1.0.4"
+  },
+  "mocha": {
+    "diff": true,
+    "extension": [
+      "js",
+      "cjs",
+      "mjs"
+    ],
+    "package": "./package.json",
+    "reporter": "spec",
+    "slow": "75",
+    "timeout": "200000",
+    "ui": "bdd",
+    "watch-files": [
+      "test/**/*.js"
+    ]
   }
 }

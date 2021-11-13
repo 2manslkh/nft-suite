@@ -3,7 +3,7 @@ const Hash = require("ipfs-only-hash");
 const fs = require("fs");
 require("dotenv").config();
 const IPFS_GATEWAY = process.env.IPFS_GATEWAY;
-const GENERATED_IMAGES_PATH = "./assets/generated/images/";
+const GENERATED_IMAGES_PATH = "./generated/images/";
 
 async function main() {
   // Initialize Provenance Data
@@ -36,12 +36,12 @@ async function main() {
       external_link: "", // TODO:
       seller_fee_basis_points: 250, // Indicates a 2.5% seller fee.
       fee_recipient: "", // TODO:
-      attributes: require(`../assets/generated/attributes/${index}.json`),
+      attributes: require(`../generated/attributes/${index}.json`),
     };
 
     // Write data to metadata file
     fs.writeFileSync(
-      `./assets/generated/metadata/${index}`,
+      `./generated/metadata/${index}`,
       JSON.stringify(body, null, 2)
     );
 

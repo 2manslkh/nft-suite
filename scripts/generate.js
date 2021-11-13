@@ -20,7 +20,7 @@ class MasterGenerator {
   generateJSON(attributes) {
     // convert JSON object to string
     const data = JSON.stringify(attributes, null, 2);
-    fs.writeFileSync(`./assets/generated/attributes/${this.index}.json`, data);
+    fs.writeFileSync(`./generated/attributes/${this.index}.json`, data);
     return this;
   }
 
@@ -38,7 +38,7 @@ class MasterGenerator {
       }
 
       const buffer = canvas.toBuffer("image/png");
-      fs.writeFileSync(`./assets/generated/images/${this.index}.png`, buffer);
+      fs.writeFileSync(`./generated/images/${this.index}.png`, buffer);
       console.log("done");
     }
     return this;

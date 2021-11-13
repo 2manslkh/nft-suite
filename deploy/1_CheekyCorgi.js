@@ -9,11 +9,8 @@ module.exports = async ({
   getUnnamedAccounts,
 }) => {
   const { deploy } = deployments;
-  const { deployer, adminAddress, treasuryAddress, owner } =
-    await getNamedAccounts();
+  const { deployer, admin, treasury, owner } = await getNamedAccounts();
   const chainId = await getChainId();
-
-  const MAX_CANDY_TOKENS = 4000000000;
 
   const cheekyCorgi = await deploy("CheekyCorgi", {
     from: deployer,
@@ -21,20 +18,11 @@ module.exports = async ({
       "CheekyCorgi",
       "CC",
       process.env.IPFS_GATEWAY,
-      adminAddress,
-      treasuryAddress,
+      admin,
+      treasury,
       owner, // OWNER OF SMART CONTRACT, NEEDED TO CLAIM COLLECTION ON OPENSEA
     ],
   });
-
-  const yieldToken = await deploy("YieldToken", {
-    from: deployer,
-    args: [cheekyCorgi.address, MAX_CANDY_TOKENS],
-  });
-
-  let cc = await ethers.getContract("CheekyCorgi", deployer);
-
-  await (await cc.setYieldToken(yieldToken.address)).wait();
 };
 
 module.exports.tags = ["Full"];
